@@ -1,0 +1,6 @@
+*
+!.devcontainer
+!.src
+!Cargo.lock
+!Cargo.toml
+!.gitignore
