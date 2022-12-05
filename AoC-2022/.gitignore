@@ -1,5 +1,6 @@
 *
 !.devcontainer
+!.vscode
 !.src
 !Cargo.lock
 !Cargo.toml
