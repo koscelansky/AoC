@@ -1,7 +1,7 @@
-use std::{fs, collections::HashMap, cmp};
+use std::{fs, collections::HashMap};
 use regex::Regex;
 use std::rc::Rc;
-use std::cell::{RefCell,};
+use std::cell::RefCell;
 use lazy_static::lazy_static;
 
 enum FsData {
@@ -204,5 +204,5 @@ pub fn day7(input: &str) {
 
     let need_to_free = 30000000 - capacity;
 
-    println!("First half {}", &root.borrow().smallest_covering(need_to_free).unwrap());
+    println!("First half {}", root.borrow().smallest_covering(need_to_free).unwrap());
 }
