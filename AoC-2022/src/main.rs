@@ -8,10 +8,11 @@ mod days {
     pub mod day7;
     pub mod day8;
     pub mod day9;
+    pub mod day10;
 }
 
 fn main() {
-    let day = 9;
+    let day = 10;
     let input = "input.txt";
 
     match day {
@@ -24,6 +25,7 @@ fn main() {
         7 => days::day7::day7(input),
         8 => days::day8::day8(input),
         9 => days::day9::day9(input),
+        10 => days::day10::day10(input),
         _ => std::process::exit(1)
     }
 }
