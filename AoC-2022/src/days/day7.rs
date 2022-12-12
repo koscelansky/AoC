@@ -136,7 +136,7 @@ fn process_command(root: &Rc<RefCell<FsNode>>, cwd: Rc<RefCell<FsNode>>, command
             match param {
                 "/" => Rc::clone(root),
                 "." => cwd,
-                ".." => find_parent(&root, &cwd).unwrap(),
+                ".." => find_parent(root, &cwd).unwrap(),
                 x => cwd.borrow().get_child(x).unwrap()
             }
         },
