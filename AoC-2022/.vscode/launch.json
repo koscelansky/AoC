@@ -4,14 +4,14 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'AoC-2022'",
+            "name": "Debug executable 'aoc-2022'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=AoC-2022"
+                    "--bin=aoc-2022"
                 ],
                 "filter": {
-                    "name": "AoC-2022",
+                    "name": "aoc-2022",
                     "kind": "bin"
                 }
             },

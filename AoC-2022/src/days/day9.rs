@@ -49,7 +49,7 @@ fn update_tail(head: (i32, i32), mut tail: (i32, i32)) -> (i32, i32) {
         tail
 }
 
-fn first_half(commands: &String) -> usize {
+fn first_half(commands: &str) -> usize {
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
     let mut head: (i32, i32) = (0, 0);
     let mut tail: (i32, i32) = (0, 0);
@@ -72,7 +72,7 @@ fn first_half(commands: &String) -> usize {
     visited.len()
 }
 
-fn second_half(commands: &String) -> usize {
+fn second_half(commands: &str) -> usize {
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
 
     let mut rope: Vec<(i32, i32)> = (0..10).map(|_| (0, 0)).collect();

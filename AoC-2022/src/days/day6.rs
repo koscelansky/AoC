@@ -1,6 +1,6 @@
 use std::fs;
 
-fn unique_window(content: &String, from: usize, size: usize) -> bool {
+fn unique_window(content: &str, from: usize, size: usize) -> bool {
     let mut window: Vec<char> = content[from..from+size].chars().collect();
 
     window.sort();

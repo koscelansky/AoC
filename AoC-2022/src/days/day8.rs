@@ -87,7 +87,7 @@ fn scenic_score(matrix: &Vec<Vec<i32>>, x: usize, y: usize) -> i32 {
         }
     }
 
-    for i in x+1..size {
+    #[allow(clippy::needless_range_loop)] for i in x+1..size {
         down += 1;
 
         
