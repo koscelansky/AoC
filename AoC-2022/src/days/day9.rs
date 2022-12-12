@@ -46,7 +46,7 @@ fn update_tail(head: (i32, i32), mut tail: (i32, i32)) -> (i32, i32) {
             tail.1 -= 1;
         }
 
-        return tail;
+        tail
 }
 
 fn first_half(commands: &String) -> usize {

@@ -27,7 +27,7 @@ fn main() {
         8 => days::day8::day8(input),
         9 => days::day9::day9(input),
         10 => days::day10::day10(input),
-        11 => days::day10::day11(input),
+        11 => days::day11::day11(input),
         _ => std::process::exit(1)
     }
 }
