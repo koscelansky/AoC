@@ -1,7 +1,7 @@
 use std::fs;
 use itertools::Itertools;
 
-
+/*
 fn print_cave(cave: &Vec<Vec<char>>) {
     for i in cave {
         for j in i {
@@ -10,6 +10,7 @@ fn print_cave(cave: &Vec<Vec<char>>) {
         println!();
     }
 }
+*/
 
 pub fn simulate_sand(mut cave: Vec<Vec<char>>, source: (usize, usize)) -> i32 {
     let mut round = 0;
