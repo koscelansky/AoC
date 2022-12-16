@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 mod days {
     pub mod day1;
     pub mod day2;
@@ -14,10 +16,13 @@ mod days {
     pub mod day13;
     pub mod day14;
     pub mod day15;
+    pub mod day16;
 }
 
 fn main() {
-    let day = 15;
+    let start = Instant::now();
+
+    let day = 16;
     let input = "input.txt";
 
     match day {
@@ -36,6 +41,11 @@ fn main() {
         13 => days::day13::day13(input),
         14 => days::day14::day14(input),
         15 => days::day15::day15(input),
+        16 => days::day16::day16(input), // this one better run in release :)
         _ => std::process::exit(1)
     }
+
+    let duration = start.elapsed();
+
+    println!("Time for day {} is: {:?}", day, duration);
 }
