@@ -7,19 +7,29 @@ struct Valve {
     tunnels: Vec<usize>
 }
 
-fn bruteforce(valves: &Vec<Valve>, minute: i32, position: usize, previous: usize, open: Vec<i32>, start: usize, elephant_time: i32, best_so_far: &mut i32) -> i32 {
-    if minute == 0 || open.iter().filter(|x| **x == 0).count() == 0 {
-        if elephant_time > 0 {
+fn total_flow(valves: &[Valve], open: &[i32]) -> i32 {
+    return open.iter()
+        .enumerate()
+        .map(|x| x.1 * valves[x.0].flow)
+        .sum();
+}
+
+fn bruteforce(valves: &[Valve], minute: i32, position: usize, previous: usize, open: Vec<i32>, start: usize, elephant_time: i32, best_so_far: &mut i32) -> i32 {
+    let opened = open.iter().filter(|x| **x != 0).count();
+    if opened == open.len() {
+        return total_flow(valves, &open);
+    }
+    
+    if minute == 0 {
+        // we can switch us with elephant, co no need to check both halves
+        if elephant_time > 0 && opened >= open.len() / 2 {
             return bruteforce(valves, elephant_time, start, start, open, 0, 0, best_so_far);
         } 
 
-        return open.iter()
-            .enumerate()
-            .map(|x| x.1 * valves[x.0].flow)
-            .sum();
+        return total_flow(valves, &open);
     }
 
-    // let see what we can make
+    // let see what we can make, cut off all non perspective
     let highest_possible: i32 = open.iter()
         .map(|x| if *x == 0 { std::cmp::max(minute, elephant_time) } else { *x })
         .enumerate()
