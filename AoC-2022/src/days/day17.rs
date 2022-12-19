@@ -1,7 +1,5 @@
 use std::fs;
 
-use itertools::concat;
-
 #[derive(Copy, Clone)]
 enum Rocks {
     Line, 
@@ -15,22 +13,6 @@ enum Rocks {
 enum Direction {
     Left, 
     Rigth,
-}
-
-fn gcd(a: u64, b: u64) -> u64 {
-    assert!(a != 0 && b != 0);
-
-    if a > b {
-        gcd(b, a)
-    } else {
-        let r = b % a;
-
-        if r == 0 {
-            a
-        } else {
-            gcd(a, r)
-        }
-    }
 }
 
 fn horizontal_size(rock: Rocks) -> usize {
@@ -158,8 +140,10 @@ fn simulate(content: &String, steps: usize) -> Vec<Vec<bool>> {
 }
 
 
-fn simulate2(content: &String, steps: usize) -> Vec<Vec<bool>> {
+fn get_cycle(content: &String) -> (usize, usize) {
     let rocks = vec![Rocks::Line, Rocks::Cross, Rocks::InverseL, Rocks::I, Rocks::Box];
+
+    let mut result = (0_usize, 0_usize);
 
     let mut rocks_iter = rocks.iter().cycle();
     let mut jets_iter = content.chars().cycle();
@@ -169,13 +153,34 @@ fn simulate2(content: &String, steps: usize) -> Vec<Vec<bool>> {
     let mut rock_starts = vec![(0_usize, 0_usize); 0];
 
     let mut jet_id = 0_usize;
-    for i in 0..steps {
+    let mut rock_id = 0_usize;
+
+    let mut cycle_window: Vec<(usize, usize)> = Vec::new();
+    loop {
         let mut step = 0_usize;
 
-        rock_starts.push((i % rocks.len(), jet_id % content.len()));
-        let last = *rock_starts.iter().last().unwrap();
-        if rock_starts.iter().take(rock_starts.len() - 1).position(|x| *x == last).is_some() {
-            println!("{} {}", last.0, last.1);
+        // this next part should determine cycle in simulation, you may notice the 
+        // arbitrary 5, i cannot really understand how to solve this without some
+        // guesswork, what I do not understand it why later pieces cannot drop
+        // below whatever limit we propose. The structure is however complicated
+        // so I guess there is a proof by contradition to the statement, this 
+        // seems to work so we stick with it, but I cannot guaranteed that there 
+        // is no input where it will break :(
+        let window_size = 5_usize;
+
+        rock_starts.push((rock_id % rocks.len(), jet_id % content.len()));
+        if rock_starts.len() > window_size {
+            let last = &rock_starts[rock_starts.len()-window_size..];
+            
+            if result.0 == 0 {
+                if rock_starts[..rock_starts.len()-window_size].windows(last.len()).any(|window| window == last) {
+                    result.0 = rock_id - window_size;
+                    cycle_window = Vec::from(last);
+                }
+            } else if result.1 == 0 && cycle_window == last {
+                result.1 = rock_id - window_size - result.0;
+                return result;
+            }
         }
 
         let rock = *rocks_iter.next().unwrap();
@@ -207,9 +212,9 @@ fn simulate2(content: &String, steps: usize) -> Vec<Vec<bool>> {
 
             step += 1;
         }
-    }
 
-    cave
+        rock_id += 1;
+    }
 }
 
 pub fn day17(input: &str) {
@@ -219,8 +224,19 @@ pub fn day17(input: &str) {
     let first_half = simulate(&content, 2022);
 
     println!("First half {}", first_half.len());
-    
-    let cycle = (content.len() * 5) / gcd(content.len() as u64, 5) as usize; // 5 rocks
 
-    simulate2(&content, 100);
+    let (first, step) = get_cycle(&content);
+    println!("First {} step {}", first, step);
+
+    let first_height = simulate(&content, first).len();
+
+    let step_height = simulate(&content, first + step).len() - first_height;
+
+    let steps = (1000000000000_usize - first) / step;
+
+    let last = (1000000000000_usize - first) % step;
+
+    let last_height = simulate(&content, first + last).len() - first_height;
+
+    println!("Second part {}", first_height + steps * step_height + last_height);
 }

@@ -24,7 +24,7 @@ mod days {
 fn main() {
     let start = Instant::now();
 
-    let day = 18;
+    let day = 17;
     let input = "input.txt";
 
     match day {
