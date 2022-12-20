@@ -17,6 +17,14 @@ fn pay_for_robot(materials: (u32, u32, u32, u32), robot: (u32, u32, u32)) -> (u3
     (materials.0 - robot.0, materials.1 - robot.1, materials.2 - robot.2, materials.3)
 }
 
+fn solution(blueprint: &Blueprint, minute: u32) -> u32 {
+    let brute = bruteforce(blueprint, minute, (0, 0, 0, 0), (1, 0, 0, 0), &mut 0);
+
+    println!("Solution is {}", brute);
+
+    brute
+}
+
 fn bruteforce(blueprint: &Blueprint, minute: u32, materials: (u32, u32, u32, u32), robots: (u32, u32, u32, u32), max_so_far: &mut u32) -> u32 {
     if minute == 0 {
         return materials.3;
@@ -90,16 +98,15 @@ pub fn day19(input: &str) {
 
     let first_half = blueprints.par_iter()
         .enumerate()
-        .map(|(i, x)| (i + 1) as u32 * bruteforce(x, 24, (0, 0, 0, 0), (1, 0, 0, 0), &mut 0))
+        .map(|(i, x)| (i + 1) as u32 * solution(x, 24))
         .sum::<u32>();
 
     println!("First half {}", first_half);
 
     let second_half = blueprints.par_iter()
         .take(3)
-        .enumerate()
-        .map(|(i, x)| (i + 1) as u32 * bruteforce(x, 32, (0, 0, 0, 0), (1, 0, 0, 0), &mut 0))
+        .map(|x| solution(x, 32))
         .product::<u32>();
 
-    println!("First half {}", second_half);
+    println!("Second half {}", second_half);
 }
