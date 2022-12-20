@@ -19,12 +19,13 @@ mod days {
     pub mod day16;
     pub mod day17;
     pub mod day18;
+    pub mod day19;
 }
 
 fn main() {
     let start = Instant::now();
 
-    let day = 17;
+    let day = 19;
     let input = "input.txt";
 
     match day {
@@ -46,6 +47,7 @@ fn main() {
         16 => days::day16::day16(input), // this one better run in release :)
         17 => days::day17::day17(input),
         18 => days::day18::day18(input),
+        19 => days::day19::day19(input),
         _ => std::process::exit(1)
     }
 
