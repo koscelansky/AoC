@@ -8,8 +8,7 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=aoc-2022",
-                    "--release"
+                    "--bin=aoc-2022"
                 ],
                 "filter": {
                     "name": "aoc-2022",
