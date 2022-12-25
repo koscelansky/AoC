@@ -1,4 +1,4 @@
-use std::{fs, collections::HashMap};
+use std::fs;
 
 #[derive(Clone)]
 enum SquareType {
